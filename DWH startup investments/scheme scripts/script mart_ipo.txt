@@ -1,0 +1,122 @@
+-- DROP SCHEMA mart_ipo;
+
+CREATE SCHEMA mart_ipo AUTHORIZATION postgres;
+
+-- mart_ipo.hub_date definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.hub_date;
+
+CREATE TABLE mart_ipo.hub_date (
+	"year" int4 NULL,
+	date_hash_key varchar NOT NULL,
+	"month" int4 NULL,
+	"day" int4 NULL,
+	CONSTRAINT hub_date_pkey PRIMARY KEY (date_hash_key)
+);
+-- mart_ipo.hub_object definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.hub_object;
+
+CREATE TABLE mart_ipo.hub_object (
+	object_hash_key varchar NOT NULL,
+	record_source varchar(100) NULL,
+	object_id varchar(20) NULL,
+	CONSTRAINT hub_object_pkey PRIMARY KEY (object_hash_key)
+);
+-- mart_ipo.incremental_load definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.incremental_load;
+
+CREATE TABLE mart_ipo.incremental_load (
+	table_name varchar NULL,
+	last_load_date timestamp NULL
+);
+-- mart_ipo.link_object_raised_volume definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.link_object_raised_volume;
+
+CREATE TABLE mart_ipo.link_object_raised_volume (
+	hash_key varchar NOT NULL,
+	record_source varchar(100) NULL,
+	date_hash_key varchar NOT NULL,
+	object_hash_key varchar NOT NULL,
+	CONSTRAINT link_ipo_pkey PRIMARY KEY (hash_key)
+);
+
+
+-- mart_ipo.link_object_raised_volume foreign keys
+
+ALTER TABLE mart_ipo.link_object_raised_volume ADD CONSTRAINT r_26 FOREIGN KEY (date_hash_key) REFERENCES mart_ipo.hub_date(date_hash_key);
+ALTER TABLE mart_ipo.link_object_raised_volume ADD CONSTRAINT r_29 FOREIGN KEY (object_hash_key) REFERENCES mart_ipo.hub_object(object_hash_key);
+-- mart_ipo.sat_object_hierarchy definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.sat_object_hierarchy;
+
+CREATE TABLE mart_ipo.sat_object_hierarchy (
+	record_source varchar(100) NULL,
+	"name" varchar NULL,
+	"type" varchar NULL,
+	category_code varchar NULL,
+	country_code varchar NULL,
+	city varchar NULL,
+	object_hash_key varchar NOT NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NOT NULL,
+	CONSTRAINT sat_object_hierarchy_pk PRIMARY KEY (updated_at, object_hash_key)
+);
+
+
+-- mart_ipo.sat_object_hierarchy foreign keys
+
+ALTER TABLE mart_ipo.sat_object_hierarchy ADD CONSTRAINT sat_object_hierarchy_fk FOREIGN KEY (object_hash_key) REFERENCES mart_ipo.hub_object(object_hash_key);
+-- mart_ipo.sat_object_raised_volume definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.sat_object_raised_volume;
+
+CREATE TABLE mart_ipo.sat_object_raised_volume (
+	hash_key varchar NOT NULL,
+	record_source varchar(100) NULL,
+	valuation_amount_by_startup float8 NULL,
+	raised_amount_by_startup float8 NULL,
+	"currencies_number_(raised_amount)" int4 NULL,
+	updated_at timestamp NOT NULL,
+	CONSTRAINT sat_object_raised_volume_pk PRIMARY KEY (hash_key, updated_at)
+);
+
+
+-- mart_ipo.sat_object_raised_volume foreign keys
+
+ALTER TABLE mart_ipo.sat_object_raised_volume ADD CONSTRAINT r_49 FOREIGN KEY (hash_key) REFERENCES mart_ipo.link_object_raised_volume(hash_key);
+-- mart_ipo.sat_object_status definition
+
+-- Drop table
+
+-- DROP TABLE mart_ipo.sat_object_status;
+
+CREATE TABLE mart_ipo.sat_object_status (
+	record_source varchar(100) NULL,
+	founded_at date NULL,
+	closed_at date NULL,
+	status varchar(20) NULL,
+	object_hash_key varchar NOT NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NOT NULL,
+	CONSTRAINT sat_object_status_pk PRIMARY KEY (object_hash_key, updated_at)
+);
+
+
+-- mart_ipo.sat_object_status foreign keys
+
+ALTER TABLE mart_ipo.sat_object_status ADD CONSTRAINT sat_object_status_fk FOREIGN KEY (object_hash_key) REFERENCES mart_ipo.hub_object(object_hash_key);

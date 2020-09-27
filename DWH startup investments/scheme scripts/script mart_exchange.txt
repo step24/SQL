@@ -1,0 +1,77 @@
+-- DROP SCHEMA mart_exchange;
+
+CREATE SCHEMA mart_exchange AUTHORIZATION postgres;
+-- mart_exchange.hub_date definition
+
+-- Drop table
+
+-- DROP TABLE mart_exchange.hub_date;
+
+CREATE TABLE mart_exchange.hub_date (
+	"year" int4 NULL,
+	date_hash_key varchar NOT NULL,
+	"month" int4 NULL,
+	"day" int4 NULL,
+	CONSTRAINT hub_date_pkey PRIMARY KEY (date_hash_key)
+);
+-- mart_exchange.hub_exchange definition
+
+-- Drop table
+
+-- DROP TABLE mart_exchange.hub_exchange;
+
+CREATE TABLE mart_exchange.hub_exchange (
+	exchange_hash_key varchar NOT NULL,
+	exchange_code varchar NULL,
+	record_source varchar(100) NULL,
+	CONSTRAINT hub_stock_pkey PRIMARY KEY (exchange_hash_key)
+);
+-- mart_exchange.incremental_load definition
+
+-- Drop table
+
+-- DROP TABLE mart_exchange.incremental_load;
+
+CREATE TABLE mart_exchange.incremental_load (
+	table_name varchar NULL,
+	last_load_date timestamp NULL
+);
+-- mart_exchange.link_exchange_raised_volume definition
+
+-- Drop table
+
+-- DROP TABLE mart_exchange.link_exchange_raised_volume;
+
+CREATE TABLE mart_exchange.link_exchange_raised_volume (
+	hash_key varchar NOT NULL,
+	record_source varchar(100) NULL,
+	date_hash_key varchar NOT NULL,
+	exchange_hash_key varchar NOT NULL,
+	CONSTRAINT link_ipo_pkey PRIMARY KEY (hash_key)
+);
+
+
+-- mart_exchange.link_exchange_raised_volume foreign keys
+
+ALTER TABLE mart_exchange.link_exchange_raised_volume ADD CONSTRAINT r_16 FOREIGN KEY (exchange_hash_key) REFERENCES mart_exchange.hub_exchange(exchange_hash_key);
+ALTER TABLE mart_exchange.link_exchange_raised_volume ADD CONSTRAINT r_26 FOREIGN KEY (date_hash_key) REFERENCES mart_exchange.hub_date(date_hash_key);
+-- mart_exchange.sat_exhange_raised_volume definition
+
+-- Drop table
+
+-- DROP TABLE mart_exchange.sat_exhange_raised_volume;
+
+CREATE TABLE mart_exchange.sat_exhange_raised_volume (
+	hash_key varchar NOT NULL,
+	record_source varchar(100) NULL,
+	valuation_amount_by_exchange float8 NULL,
+	raised_amount_by_exchange float8 NULL,
+	"currencies_number_(raised_amount)" int4 NULL,
+	updated_at timestamp NOT NULL,
+	CONSTRAINT sat_exhange_raised_volume_pk PRIMARY KEY (hash_key, updated_at)
+);
+
+
+-- mart_exchange.sat_exhange_raised_volume foreign keys
+
+ALTER TABLE mart_exchange.sat_exhange_raised_volume ADD CONSTRAINT r_49 FOREIGN KEY (hash_key) REFERENCES mart_exchange.link_exchange_raised_volume(hash_key);

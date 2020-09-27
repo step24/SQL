@@ -1,0 +1,112 @@
+-- DROP SCHEMA staging_area;
+
+CREATE SCHEMA staging_area AUTHORIZATION postgres;
+-- staging_area.funding_round definition
+
+-- Drop table
+
+-- DROP TABLE staging_area.funding_round;
+
+CREATE TABLE staging_area.funding_round (
+	funding_round_id int4 NULL,
+	funding_round_type varchar NULL,
+	funding_round_code varchar NULL,
+	pre_money_valuation_usd float8 NULL,
+	post_money_valuation_usd float8 NULL,
+	participants int2 NULL,
+	raised_amount_usd float8 NULL,
+	raised_currency_code varchar NULL,
+	raised_amount float8 NULL,
+	pre_money_valuation float8 NULL,
+	post_money_valuation float8 NULL,
+	pre_money_currency_code varchar NULL,
+	post_money_currency_code varchar NULL,
+	source_url text NULL,
+	source_discription text NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NULL,
+	created_by varchar NULL,
+	id int4 NULL,
+	object_id varchar NULL,
+	founded_at date NULL,
+	is_first_round bool NULL,
+	is_last_round bool NULL
+);
+-- staging_area.incremental_load definition
+
+-- Drop table
+
+-- DROP TABLE staging_area.incremental_load;
+
+CREATE TABLE staging_area.incremental_load (
+	table_name varchar NOT NULL,
+	last_load_date timestamp NULL,
+	CONSTRAINT incremental_load_pk PRIMARY KEY (table_name)
+);
+-- staging_area.investments definition
+
+-- Drop table
+
+-- DROP TABLE staging_area.investments;
+
+CREATE TABLE staging_area.investments (
+	investor_object_id varchar NULL,
+	funding_round_id int4 NULL,
+	funded_object_id varchar NULL,
+	id int4 NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NULL
+);
+-- staging_area.ipo definition
+
+-- Drop table
+
+-- DROP TABLE staging_area.ipo;
+
+CREATE TABLE staging_area.ipo (
+	id int4 NULL,
+	ipo_id int4 NULL,
+	object_id varchar NULL,
+	valuation_amount float8 NULL,
+	valuation_currency_code varchar NULL,
+	raised_amount float8 NULL,
+	raised_currency_code varchar NULL,
+	public_at timestamp NULL,
+	stock_symbol varchar NULL,
+	source_url varchar NULL,
+	source_description text NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NULL
+);
+-- staging_area.objects definition
+
+-- Drop table
+
+-- DROP TABLE staging_area.objects;
+
+CREATE TABLE staging_area.objects (
+	object_id varchar NULL,
+	entity_type varchar NULL,
+	category_code varchar NULL,
+	country_code varchar NULL,
+	city varchar NULL,
+	"name" varchar NULL,
+	status varchar NULL,
+	funding_total_usd float8 NULL,
+	founded_at date NULL,
+	closed_at date NULL,
+	entity_id int4 NULL,
+	parent_id varchar NULL,
+	normalized_name varchar NULL,
+	permalink varchar NULL,
+	"domain" varchar NULL,
+	homepage_url text NULL,
+	twitter_username varchar NULL,
+	logo_width int4 NULL,
+	logo_height int4 NULL,
+	short_description varchar NULL,
+	description text NULL,
+	logo_url text NULL,
+	created_at timestamp NULL,
+	updated_at timestamp NULL
+);
