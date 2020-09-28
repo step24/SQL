@@ -1,2 +1,2 @@
 # SQL
-- Here you can see my SQL projects
+Here you can see my SQL projects.
