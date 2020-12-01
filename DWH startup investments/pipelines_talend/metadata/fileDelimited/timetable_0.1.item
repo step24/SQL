@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:TalendMetadata="http://www.talend.org/metadata/connection/2010" xmlns:orgomg.cwm.resource.record="http:///orgomg/cwm/resource/record.ecore">
+  <TalendMetadata:DelimitedFileConnection xmi:id="_YZjGIafbEeqHGKXYLuyL8Q" name="timetable" dataPackage="_YZjGIqfbEeqHGKXYLuyL8Q" Server="Localhost 127.0.0.1" FilePath="D:/ВШЭ 2 курс/УД ВШЭ/кр3/timetable.csv" Encoding="US-ASCII" FieldSeparatorValue="&quot;,&quot;" RowSeparatorValue="&quot;\n&quot;" UseHeader="true" HeaderValue="1" FirstLineCaption="true" FieldSeparatorType="Comma"/>
+  <orgomg.cwm.resource.record:RecordFile xmi:id="_YZjGIqfbEeqHGKXYLuyL8Q" name="default" dataManager="_YZjGIafbEeqHGKXYLuyL8Q">
+    <ownedElement xsi:type="TalendMetadata:MetadataTable" xmi:id="_YZjGI6fbEeqHGKXYLuyL8Q" id="_U_yVAKfbEeqHGKXYLuyL8Q" label="metadata">
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_YZjGJKfbEeqHGKXYLuyL8Q" label="time_start" length="-1" talendType="id_Date" pattern="&quot;hh:mm:ss&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_YZjGJafbEeqHGKXYLuyL8Q" label="time_end" length="-1" talendType="id_Date" pattern="&quot;hh:mm:ss&quot;"/>
+      <feature xsi:type="TalendMetadata:MetadataColumn" xmi:id="_YZjGJqfbEeqHGKXYLuyL8Q" label="class_nr" length="1" talendType="id_Integer" pattern="&quot;dd-MM-yyyy&quot;"/>
+    </ownedElement>
+  </orgomg.cwm.resource.record:RecordFile>
+</xmi:XMI>
